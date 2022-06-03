@@ -15,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Set Version
-        run: echo VERSION > ${{ env.version }}
+        run: export version=$(cat VERSION)
       - name: Create Artifact
         run: zip artifact.zip code/*.py
       - name: Release

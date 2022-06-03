@@ -1,8 +1,5 @@
 name: Build Release Artifact
 
-env:
-  VERSION: 0.0.0
-
 on:
   push:
     branches:
@@ -16,7 +13,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Set Version
-        run: cat VERSION >> $VERSION
+        run: |
+            VER=$(cat VERSION)
+            echo "VERSION=$VER" >> $GITHUB_ENV
       - name: Create Artifact
         run: zip artifact.zip code/*.py
       - name: Release

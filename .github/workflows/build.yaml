@@ -1,5 +1,8 @@
 name: Build Release Artifact
 
+env:
+  VERSION: 0.0.0
+
 on:
   push:
     branches:
@@ -9,18 +12,16 @@ jobs:
   build:
     name: Build Plugin Artifact
     runs-on: ubuntu-latest
-    env:
-      version: 0.0.0
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Set Version
-        run: cat VERSION >> $version
+        run: cat VERSION >> $VERSION
       - name: Create Artifact
         run: zip artifact.zip code/*.py
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: artifact.zip
-          tag_name: v${{ env.version }}
-          name: Version ${{ env.version }}
+          tag_name: v${{ env.VERSION }}
+          name: Version ${{ env.VERSION }}

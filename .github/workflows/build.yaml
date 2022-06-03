@@ -12,15 +12,27 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.6'
+
       - name: Set Version
         run: |
-            VER=$(cat VERSION)
-            echo "VERSION=$VER" >> $GITHUB_ENV
+          VER=$(cat VERSION)
+          echo "VERSION=$VER" >> $GITHUB_ENV
+
       - name: Create Artifact
         run: zip artifact.zip code/*.py
+
+      #- name: Build Release Notes from Changelog
+        #run: python build-rn.py ${{ env.VERSION }}
+
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: artifact.zip
-          tag_name: v${{ env.VERSION }}
           name: Version ${{ env.VERSION }}
+          tag_name: v${{ env.VERSION }}
+          body_path: release-notes.md

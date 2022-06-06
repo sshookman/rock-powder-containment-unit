@@ -26,8 +26,8 @@ jobs:
       - name: Create Artifact
         run: zip artifact.zip code/*.py
 
-      #- name: Build Release Notes from Changelog
-        #run: python build-rn.py ${{ env.VERSION }}
+      - name: Build Release Notes from Changelog
+        run: python .github/scripts/generate_rn.py
 
       - name: Release
         uses: softprops/action-gh-release@v1
